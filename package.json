@@ -28,10 +28,11 @@
     "react-dom": "^16.5.1",
     "react-scripts": "1.1.5",
     "url": "^0.11.0",
-    "vk-io": "^4.0.0-rc.2"
+    "vk-io": "^4.0.0-rc.2",
+    "nodemon": "^1.18.4"
+
   },
   "devDependencies": {
-    "nodemon": "^1.18.4",
     "babel-cli": "^6.24.1",
     "babel-core": "6.26.0",
     "babel-eslint": "7.2.3",
