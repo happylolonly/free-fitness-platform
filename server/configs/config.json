@@ -1,0 +1,12 @@
+{
+    "cities": {
+        "minsk": {
+            "mainGroup": "free_fitness_minsk",
+            "groupsToParse": [
+                "minskforfree",
+                "kto.kuda",
+                "free_minsk"
+            ]
+        }
+    }
+}
