@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Подожди немного...</title>
+</head>
+<body>
+    <!-- <h3>Привет</h3> -->
+    <!-- <h4>Нам необходимо тебя перенаправить, из за того что соцсети блокируют наш основной сайт на бесплатном хостинге</h4> -->
+    <!-- <p>Осталось подождать <span>3</span> секунд</p> -->
+
+    <!-- <p>Возможно придется немного подождать пока он "проснется", пока не хватает денег на нормальный хостинг</p> -->
+
+    <script>
+        let time = 0;
+
+        const span = document.querySelector('p span');
+
+        setInterval(() => {
+
+            if (time === 0) {
+                window.location.href = 'https://free-fitness-platform.herokuapp.com';
+                return;
+            }
+
+            span.innerHTML = time;
+            time -= 1;
+            
+        }, 1000);
+
+    </script>
+</body>
+</html>
