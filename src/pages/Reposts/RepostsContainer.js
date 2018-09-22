@@ -21,6 +21,7 @@ class StateComponent extends Component {
 
     this.state = {
       reposts: [],
+      count: null,
     }
 
     this.getReposts = this.getReposts.bind(this);
@@ -54,15 +55,15 @@ class StateComponent extends Component {
   }
 
   async getReposts() {
-      const data = await axios.get(`${api}/reposts`, { params: {
+      const res = await axios.get(`${api}/reposts`, { params: {
         city: 'minsk',
         limit: 10,
       }});
 
-      const reposts = data.data;
+      const { data, count } = res.data;
 
 
-      this.setState({ reposts });
+      this.setState({ reposts: data, count });
   }
 
   async confirmRepost(id, status) {
@@ -147,6 +148,8 @@ class StateComponent extends Component {
       <div className="reposts-page">
 
       <h2>Мероприятия которых у нас нету в группе</h2>
+
+      <p>Количество: {this.state.count}</p>
 
         {this.state.reposts.map(item => {
           const { _id, id, dateCreated, group } = item;

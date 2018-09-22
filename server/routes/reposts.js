@@ -6,9 +6,17 @@ export default (app) => {
     app.get('/api/reposts', async (req, res, next) => {
         const { city, limit } = req.query;
 
+        const t = await RepostModel.find({ status: 'awaiting' }).count();
+
+        debugger;
+
+
     const data = await RepostModel.find({ city, status: 'awaiting' }).sort({ dateCreated: 1 }).limit(+limit)
 
-    res.status(200).send(data)
+    res.status(200).send({
+        count: t,
+        data,
+    })
     });
 
 
