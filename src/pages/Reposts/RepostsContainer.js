@@ -29,28 +29,28 @@ class StateComponent extends Component {
   componentDidMount() {
     const paths = url.parse(window.location.href, true);
 
-    var hash = window.location.hash.substring(1);
-    var params = {}
-    hash.split('&').map(hk => { 
-      let temp = hk.split('='); 
-        params[temp[0]] = temp[1] 
-    });
+    // var hash = window.location.hash.substring(1);
+    // var params = {}
+    // hash.split('&').map(hk => { 
+    //   let temp = hk.split('='); 
+    //     params[temp[0]] = temp[1] 
+    // });
 
-    console.log(params); //Here are the params to use
-    // debugger;
-    if (params['access_token']) {
-      localStorage.setItem('token', params['access_token']);
-      window.location.hash = '';
-    } else if (!localStorage.getItem('token')) {
-     this.redirect(); 
-    }
+    // console.log(params); //Here are the params to use
+    // // debugger;
+    // if (params['access_token']) {
+    //   localStorage.setItem('token', params['access_token']);
+    //   window.location.hash = '';
+    // } else if (!localStorage.getItem('token')) {
+    //  this.redirect(); 
+    // }
 
     this.getReposts();
   }
 
   redirect() {
     // axios.get('https://oauth.vk.com/authorize?client_id=6693912&display=page&redirect_uri=http://example.com/callback&scope=wall&response_type=token&v=5.85&state=123456')
-    window.location = 'https://oauth.vk.com/authorize?client_id=6693912&display=page&redirect_uri=http://localhost:3000&scope=wall&response_type=token&v=5.85'
+    // window.location = 'https://oauth.vk.com/authorize?client_id=6693912&display=page&redirect_uri=http://localhost:3000&scope=wall&response_type=token&v=5.85'
   }
 
   async getReposts() {
