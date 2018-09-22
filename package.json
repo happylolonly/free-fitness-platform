@@ -24,13 +24,13 @@
     "moment": "^2.22.2",
     "mongoose": "^5.2.14",
     "morgan": "^1.9.1",
+    "nodemon": "^1.18.4",
     "react": "^16.5.1",
     "react-dom": "^16.5.1",
+    "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.5",
     "url": "^0.11.0",
-    "vk-io": "^4.0.0-rc.2",
-    "nodemon": "^1.18.4"
-
+    "vk-io": "^4.0.0-rc.2"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
