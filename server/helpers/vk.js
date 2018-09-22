@@ -3,6 +3,7 @@ import { uniq } from 'lodash';
 import { get } from 'http';
 
 import config from '../configs/config.env';
+import configC from '../configs/config';
 
 // import logger from 'logger';
 
@@ -14,7 +15,7 @@ const vk = new VK();
 
 vk.setToken('4e82e2084e82e2084e82e208a74ee4c61044e824e82e208151f9677d3d62856454ed2e6');
 
-const WORDS = ['фитнес', 'танцы'];
+const WORDS = configC.cities.minsk.words;
 
 async function getReposts(group) {
 
