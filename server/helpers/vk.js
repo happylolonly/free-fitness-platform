@@ -128,6 +128,29 @@ async function getNewOurPosts(reposts) {
 }
 
 
+async function resetHiddenStatus() {
+
+    try {
+
+        const repost = await RepostModel.find({ status: 'hidden' });
+
+        debugger;
+
+        if (repost.length) {
+
+            for (const item of repost) { // можно на промис all
+                await RepostModel.findByIdAndUpdate({_id: item._id }, { status: 'awaiting' });
+            }
+
+        }
+
+    }catch(e) {
+        console.log(e);
+    }
+
+
+}
+
 async function updateOurNewPosts(newReposts) {
 
     const promises = newReposts.map(item => {
@@ -193,6 +216,7 @@ export async function init(config) {
     
     
     const reposts = await getOurReposts(mainGroup);
+    // await resetHiddenStatus();
     const newReposts = await getNewOurPosts(reposts);
     const t = await updateOurNewPosts(newReposts);
 
