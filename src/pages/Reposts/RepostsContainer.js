@@ -160,8 +160,8 @@ class StateComponent extends Component {
               <p>Дата: {moment(dateCreated).format('DD MM YYYY')}</p>
               <p>Группа: {group}</p>
 
-              <button className="" onClick={() => this.handleClick(_id, id, 'active')}>Подтвердить</button>
-              <button className="" onClick={() => this.handleClick(_id, id, 'declined')}>Отклонить</button>
+              {/* <button className="" onClick={() => this.handleClick(_id, id, 'active')}>Подтвердить</button> */}
+              <button className="" onClick={() => this.handleClick(_id, id, 'declined')}>Просмотрено</button>
             </div>
           )
         })}
