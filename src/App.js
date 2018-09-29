@@ -3,6 +3,10 @@ import logo from './logo.svg'
 
 import { Link } from 'react-router-dom';
 
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+
 
 
 import './App.css';
@@ -12,9 +16,15 @@ class App extends Component {
     return (
       <div className="App">
 
+      <AppBar position="static" color="primary" className="header">
+        <Toolbar>
+          <Link to="/">Главная</Link>
+          <Link to="/faq">FAQ</Link>
+        </Toolbar>
+      </AppBar>
+
       <div className="header">
-       <Link to="/">Главная</Link>
-       <Link to="/faq">FAQ</Link>
+       
       </div>
 
       {this.props.children}
