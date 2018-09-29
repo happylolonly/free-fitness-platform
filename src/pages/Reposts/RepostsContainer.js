@@ -8,6 +8,10 @@ import moment from 'moment';
 
 import url from 'url';
 
+import Button from '@material-ui/core/Button';
+import Card from '@material-ui/core/Card';
+import Badge from '@material-ui/core/Badge';
+
 import './StateComponent.css';
 
 
@@ -146,25 +150,35 @@ class StateComponent extends Component {
   render() {
     return (
       <div className="reposts-page">
+        
 
-      <h2>Мероприятия которых у нас нету в группе</h2>
+        <h2>Мероприятия которых у нас нету в группе</h2>
 
-      <p>Количество: {this.state.count}</p>
+        
 
-        {this.state.reposts.map(item => {
-          const { _id, id, dateCreated, group } = item;
+<p>Количество: <Badge color="primary" badgeContent={this.state.count} className="badge">
+      </Badge></p>
 
-          return (
-            <div key={_id} className="repost">
-              <a target="_blank" onClick={() => this.handleLinkClick(_id, 'hidden')} href={`https://vk.com/${group}?w=wall${id}`}>{`https://vk.com/${group}?w=wall${id}`}</a>
-              <p>Дата: {moment(dateCreated).format('DD MM YYYY')}</p>
-              <p>Группа: {group}</p>
+  {this.state.reposts.map(item => {
+    const { _id, id, dateCreated, group } = item;
 
-              {/* <button className="" onClick={() => this.handleClick(_id, id, 'active')}>Подтвердить</button> */}
-              <button className="" onClick={() => this.handleClick(_id, id, 'declined')}>Просмотрено</button>
-            </div>
-          )
-        })}
+    return (
+      <Card key={_id} className="repost">
+
+        <a target="_blank" onClick={() => this.handleLinkClick(_id, 'hidden')} href={`https://vk.com/${group}?w=wall${id}`}>{`https://vk.com/${group}?w=wall${id}`}</a>
+        <p>Дата создания: {moment(dateCreated).format('DD MM YYYY HH:mm')}</p>
+        <p>Группа: <a target="_blank" href={`https://vk.com/${group}`}>{`https://vk.com/${group}`}</a></p>
+
+        {/* <button className="" onClick={() => this.handleClick(_id, id, 'active')}>Подтвердить</button> */}
+        <Button onClick={() => this.handleClick(_id, id, 'declined')} variant="contained" color="secondary">
+        Просмотрено
+</Button>
+</Card>
+
+    )
+  })}
+
+      
         
       </div>
     )
