@@ -147,6 +147,22 @@ class StateComponent extends Component {
 
   }
 
+  handleOpenButton = () => {
+
+    const OPEN_COUNT = 4;
+
+    this.state.reposts.forEach((repost, i) => {
+      if (i > OPEN_COUNT) return;
+      const { group, id } = repost;
+      window.open(this.createLink(group, id));
+    });
+        
+  }
+
+  createLink(group, id) {
+    return `https://vk.com/${group}?w=wall${id}`;
+  }
+
   render() {
     return (
       <div className="reposts-page">
@@ -159,13 +175,19 @@ class StateComponent extends Component {
 <p>Количество: <Badge color="primary" badgeContent={this.state.count} className="badge">
       </Badge></p>
 
+      {this.state.reposts.length > 0 &&
+        <button onClick={this.handleOpenButton}>Открыть 5 мероприятий во вкладках</button>
+      }
+
   {this.state.reposts.map(item => {
     const { _id, id, dateCreated, group } = item;
+
+    const postHref = this.createLink(group, id);
 
     return (
       <Card key={_id} className="repost">
 
-        <a target="_blank" onClick={() => this.handleLinkClick(_id, 'hidden')} href={`https://vk.com/${group}?w=wall${id}`}>{`https://vk.com/${group}?w=wall${id}`}</a>
+        <a target="_blank" onClick={() => this.handleLinkClick(_id, 'hidden')} href={postHref}>{postHref}</a>
         <p>Дата создания: {moment(dateCreated).format('DD MM YYYY HH:mm')}</p>
         <p>Группа: <a target="_blank" href={`https://vk.com/${group}`}>{`https://vk.com/${group}`}</a></p>
 
