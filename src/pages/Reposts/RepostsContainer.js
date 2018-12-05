@@ -59,15 +59,17 @@ class StateComponent extends Component {
   }
 
   async getReposts() {
-      const res = await axios.get(`${api}/reposts`, { params: {
+    const res = await axios.get(`${api}/reposts`, {
+      params: {
         city: 'minsk',
         limit: 10,
-      }});
+      }
+    });
 
-      const { data, count } = res.data;
+    const { data, count } = res.data;
 
 
-      this.setState({ reposts: data, count });
+    this.setState({ reposts: data, count });
   }
 
   async confirmRepost(id, status) {
@@ -88,7 +90,7 @@ class StateComponent extends Component {
     } catch (error) {
       console.log(error);
     }
-    
+
 
     // const reposts = data.data;
 
@@ -97,7 +99,7 @@ class StateComponent extends Component {
 
 
     // this.setState({ reposts });
-}
+  }
 
   async handleClick(_id, id, status) {
 
@@ -118,15 +120,11 @@ class StateComponent extends Component {
     // } catch(error) {
     //   console.log(error);
     // }
-        
+
     this.confirmRepost(_id, status);
   }
 
   async handleLinkClick(_id, status) {
-
-    // return
-
-    // debugger;
 
     // try {
 
@@ -156,7 +154,7 @@ class StateComponent extends Component {
       const { group, id } = repost;
       window.open(this.createLink(group, id));
     });
-        
+
   }
 
   createLink(group, id) {
@@ -166,42 +164,37 @@ class StateComponent extends Component {
   render() {
     return (
       <div className="reposts-page">
-        
 
         <h2>Мероприятия которых у нас нету в группе</h2>
 
-        
+        <p>Количество: <Badge color="primary" badgeContent={this.state.count} className="badge">
+        </Badge></p>
 
-<p>Количество: <Badge color="primary" badgeContent={this.state.count} className="badge">
-      </Badge></p>
+        {this.state.reposts.length > 0 &&
+          <button onClick={this.handleOpenButton}>Открыть 5 мероприятий во вкладках</button>
+        }
 
-      {this.state.reposts.length > 0 &&
-        <button onClick={this.handleOpenButton}>Открыть 5 мероприятий во вкладках</button>
-      }
+        {this.state.reposts.map(item => {
+          const { _id, id, dateCreated, group } = item;
 
-  {this.state.reposts.map(item => {
-    const { _id, id, dateCreated, group } = item;
+          const postHref = this.createLink(group, id);
 
-    const postHref = this.createLink(group, id);
+          return (
+            <Card key={_id} className="repost">
 
-    return (
-      <Card key={_id} className="repost">
+              <a target="_blank" onClick={() => this.handleLinkClick(_id, 'hidden')} href={postHref}>{postHref}</a>
+              <p>Дата создания: {moment(dateCreated).format('DD MM YYYY HH:mm')}</p>
+              <p>Группа: <a target="_blank" href={`https://vk.com/${group}`}>{`https://vk.com/${group}`}</a></p>
 
-        <a target="_blank" onClick={() => this.handleLinkClick(_id, 'hidden')} href={postHref}>{postHref}</a>
-        <p>Дата создания: {moment(dateCreated).format('DD MM YYYY HH:mm')}</p>
-        <p>Группа: <a target="_blank" href={`https://vk.com/${group}`}>{`https://vk.com/${group}`}</a></p>
+              {/* <button className="" onClick={() => this.handleClick(_id, id, 'active')}>Подтвердить</button> */}
+              <Button onClick={() => this.handleClick(_id, id, 'declined')} variant="contained" color="secondary">
+                Просмотрено
+              </Button>
+            </Card>
 
-        {/* <button className="" onClick={() => this.handleClick(_id, id, 'active')}>Подтвердить</button> */}
-        <Button onClick={() => this.handleClick(_id, id, 'declined')} variant="contained" color="secondary">
-        Просмотрено
-</Button>
-</Card>
+          )
+        })}
 
-    )
-  })}
-
-      
-        
       </div>
     )
   }
