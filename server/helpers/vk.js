@@ -17,23 +17,28 @@ vk.setToken('4e82e2084e82e2084e82e208a74ee4c61044e824e82e208151f9677d3d62856454e
 
 const WORDS = configC.cities.minsk.words;
 
-async function getReposts(group) {
+async function getReposts(group, wordsType) {
   const reposts = [];
   const promises = [];
 
-  WORDS.forEach(word => {
-    promises.push(
-      (() => {
-        return vk.api.wall.search({
-          domain: group,
-          query: `${word}`,
-          count: 10
-        });
-      })()
-    );
-  });
-
   try {
+    WORDS[wordsType].forEach(word => {
+      promises.push(
+        (() => {
+          console.log('Search:', group, 'word', word);
+          return vk.api.wall
+            .search({
+              domain: group,
+              query: `${word}`,
+              count: 10
+            })
+            .catch(error => {
+              console.log(error);
+            });
+        })()
+      );
+    });
+
     const data = await Promise.all(promises);
 
     data.forEach(item => {
@@ -48,13 +53,13 @@ async function getReposts(group) {
         });
       });
     });
-    console.log(data);
     // todo
     // const filteredLinks = _.uniq(peoplenames);
 
     return reposts;
   } catch (error) {
     console.log(error);
+    return [];
   }
 }
 
@@ -71,8 +76,6 @@ async function getOurReposts(ourGroup) {
       count: 50,
       filter: 'all'
     });
-
-    // console.log(data);
 
     data.items.forEach(item => {
       const { copy_history } = item;
@@ -100,7 +103,6 @@ async function getNewOurPosts(reposts) {
 
   for (const item of reposts) {
     const repost = await RepostModel.findOne({ id: item.id });
-    console.log(repost);
 
     if (!repost) {
       newReposts.push(item);
@@ -114,16 +116,14 @@ async function resetHiddenStatus() {
   try {
     const repost = await RepostModel.find({ status: 'hidden' });
 
-    debugger;
-
     if (repost.length) {
       for (const item of repost) {
         // можно на промис all
         await RepostModel.findByIdAndUpdate({ _id: item._id }, { status: 'awaiting' });
       }
     }
-  } catch (e) {
-    console.log(e);
+  } catch (error) {
+    console.log(error);
   }
 }
 
@@ -155,7 +155,6 @@ async function saveNewReposts(possibleRepost) {
     const { id, date, group, city } = item;
 
     const repost = await RepostModel.findOne({ id: item.id, city, group });
-    console.log(repost);
 
     if (!repost) {
       // newReposts.push(item);
@@ -182,8 +181,13 @@ export async function init(config) {
   const newReposts = await getNewOurPosts(reposts);
   const t = await updateOurNewPosts(newReposts);
 
-  for (const item of groupsToParse) {
-    const possibleRepost = await getReposts(item);
+  for (const item of groupsToParse.free) {
+    const possibleRepost = await getReposts(item, 'common');
+    await saveNewReposts(possibleRepost);
+  }
+
+  for (const item of groupsToParse.commercial) {
+    const possibleRepost = await getReposts(item, 'group');
     await saveNewReposts(possibleRepost);
   }
 
