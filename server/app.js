@@ -15,6 +15,8 @@ require('./helpers/db').default(mongoose);
 require('./middlewares').default(app, express);
 require('./routes').default(app);
 
+require('./helpers/bot').default(app);
+
 app.use((req, res) => {
   res.sendFile(path.join(__dirname, '../build/index.html'));
 });
