@@ -29,7 +29,7 @@ export default app => {
     } else {
       bot.sendMessage(MAIN_CHAT, `Новых возможных мероприятий нету, молодцы!`);
     }
-  });
 
-  res.send('ok');
+    res.send('ok');
+  });
 };
