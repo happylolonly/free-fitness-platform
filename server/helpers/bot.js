@@ -1,5 +1,9 @@
 const VkBot = require('node-vk-bot-api');
 
+import { init } from './vk';
+
+import config from '../configs/config';
+
 const bot = new VkBot({
   token: process.env.VK_TOKEN,
   confirmation: process.env.VK_CONFIRMATION
@@ -17,6 +21,8 @@ export default app => {
   app.post('/api/bot', bot.webhookCallback);
 
   app.get('/api/check-reposts', async (req, res) => {
+    await init(config);
+    console.log('done');
     const t = await RepostModel.find({ status: 'awaiting' }).count();
 
     const MAIN_CHAT = process.env.MAIN_CHAT;
