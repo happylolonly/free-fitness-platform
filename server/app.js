@@ -25,4 +25,4 @@ app.listen(port, () => {
   console.log('Server ready on:', port);
 });
 
-init(config);
+// init(config);
