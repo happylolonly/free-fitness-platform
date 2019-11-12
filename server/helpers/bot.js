@@ -21,8 +21,6 @@ export default app => {
   app.post('/api/bot', bot.webhookCallback);
 
   app.get('/api/check-reposts', async (req, res) => {
-    // await init(config);
-    // console.log('done');
     const t = await RepostModel.find({ status: 'awaiting' }).count();
 
     const MAIN_CHAT = process.env.MAIN_CHAT;
@@ -37,5 +35,10 @@ export default app => {
     }
 
     res.send('ok');
+  });
+
+  app.get('/api/check', async (req, res) => {
+    await init(config);
+    console.log('done');
   });
 };
