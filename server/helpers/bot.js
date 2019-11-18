@@ -40,5 +40,6 @@ export default app => {
   app.get('/api/check', async (req, res) => {
     await init(config);
     console.log('done');
+    res.send('ok');
   });
 };
